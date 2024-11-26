@@ -1,0 +1,8 @@
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+
+tasks.named('wrapper') {
+    distributionUrl = 'http://mirrors.cloud.tencent.com/gradle/gradle-7.6-bin.zip'
+}
