@@ -8,7 +8,7 @@ version = '1.0-SNAPSHOT'
 ext.mainClassName = 'com.hjg.stream.StreamApp'
 
 application {
-    mainClassName = 'com.hjg.stream.StreamApp'
+    mainClassName = "${mainClassName}"
 }
 
 repositories {
@@ -28,6 +28,12 @@ test {
 
 tasks.register('uberJar', Jar) {
     archiveClassifier = 'uber'
+
+    sourceSets.main.output.files.each { println(it.getAbsolutePath())}
+    /**
+     * D:\github\gradle_demos\java_demos\stream-demo\build\classes\java\main
+     * D:\github\gradle_demos\java_demos\stream-demo\build\resources\main
+     */
 
     from sourceSets.main.output
 
