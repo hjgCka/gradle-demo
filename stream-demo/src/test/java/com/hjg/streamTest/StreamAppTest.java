@@ -4,6 +4,8 @@ import com.hjg.school.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Description
@@ -20,5 +22,9 @@ public class StreamAppTest {
         student.setBirthday(new Date());
 
         System.out.println(student);
+
+        Set<String> sets = new HashSet<>();
+        sets.clear();
+        sets.add("aaa");
     }
 }

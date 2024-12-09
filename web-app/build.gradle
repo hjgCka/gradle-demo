@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.2.7.RELEASE'
+    //从7.0开始，需要JDK11
+    id 'com.bmuschko.docker-spring-boot-application' version '6.7.0'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -24,3 +26,41 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+//配置docker
+docker {
+    url = 'tcp://10.168.55.88:2375'
+}
+
+task prepareBuildDir(type: Sync, dependsOn: bootJar) {
+    def jarName = "${project.name}-${version}" + '.jar'
+    def jarPath = 'build/libs/' + jarName
+
+    from ('docker/Dockerfile', jarPath)
+
+    into 'build/docker'
+
+    rename (jarName, 'app.jar')
+
+    //exclude才是不再删除指定文件的配置
+    /*preserve {
+        exclude 'build/libs/app.jar'
+    }*/
+}
+
+tasks.named('dockerBuildImage') {
+    dockerFile = file('build/docker/Dockerfile')
+    inputDir = file('build/docker')
+
+    //需要先亲空，否则默认镜像是 groupId/projectName:version
+    images.empty()
+    def version = "${project.name}" + ':' + "${version.toLowerCase()}"
+    images.add(version)
+
+    dependsOn prepareBuildDir
+}
+
+tasks.register('clearBuildDockerDir', Delete) {
+    delete 'build/docker'
+}
+dockerBuildImage.configure { finalizedBy clearBuildDockerDir }
