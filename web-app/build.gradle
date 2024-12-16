@@ -3,6 +3,8 @@ plugins {
     id 'org.springframework.boot' version '2.2.7.RELEASE'
     //从7.0开始，需要JDK11
     id 'com.bmuschko.docker-spring-boot-application' version '6.7.0'
+
+    id 'myproject.java-conventions'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -15,16 +17,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation project(':entity')
-}
-
-test {
-    useJUnitPlatform()
 }
 
 //配置docker

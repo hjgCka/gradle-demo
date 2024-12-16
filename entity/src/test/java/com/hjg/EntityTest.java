@@ -1,6 +1,7 @@
 package com.hjg;
 
 import com.hjg.school.Student;
+import com.hjg.school.Teacher;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -22,5 +23,12 @@ public class EntityTest {
         stu.setBirthday(now);
 
         System.out.println(stu);
+    }
+
+    @Test
+    public void testTeacher() {
+        Teacher teacher = new Teacher();
+        teacher.setName("Ekko");
+        System.out.println(teacher);
     }
 }

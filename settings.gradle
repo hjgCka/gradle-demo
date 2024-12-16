@@ -2,4 +2,3 @@ rootProject.name = 'java_demos'
 include 'entity'
 include 'stream-demo'
 include 'web-app'
-

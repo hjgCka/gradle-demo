@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+
+    //为了使用lombok，需要加入对应插件。内容由lombok官方提供。
+    //precompile script plugin的文件不能出现插件版本号
+    id 'io.freefair.lombok'
+}
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,15 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/io.freefair.lombok/io.freefair.lombok.gradle.plugin
+    //implementation 'io.freefair.lombok:io.freefair.lombok.gradle.plugin:8.11'
+
+    //这2个插件效果似乎相同，前者来自maven官方仓库文档，后者来自lombok官方安装文档
+    implementation 'io.freefair.gradle:lombok-plugin:8.11'
+}

@@ -1,5 +1,7 @@
 plugins {
     id 'application'
+
+    id 'myproject.java-conventions'
 }
 
 group = 'com.hjg'
@@ -16,25 +18,17 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-
     implementation project(':entity')
-}
-
-test {
-    useJUnitPlatform()
 }
 
 tasks.register('uberJar', Jar) {
     archiveClassifier = 'uber'
 
-    sourceSets.main.output.files.each { println(it.getAbsolutePath())}
+    //sourceSets.main.output.files.each { println(it.getAbsolutePath())}
     /**
      * D:\github\gradle_demos\java_demos\stream-demo\build\classes\java\main
      * D:\github\gradle_demos\java_demos\stream-demo\build\resources\main
      */
-
     from sourceSets.main.output
 
     dependsOn configurations.runtimeClasspath
