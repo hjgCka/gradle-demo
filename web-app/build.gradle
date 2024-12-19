@@ -29,23 +29,27 @@ docker {
 
 task prepareBuildDir(type: Sync, dependsOn: bootJar) {
     def jarName = "${project.name}-${version}" + '.jar'
-    def jarPath = 'build/libs/' + jarName
+    //def jarPath = 'build/libs/' + jarName
 
-    from ('docker/Dockerfile', jarPath)
-
-    into 'build/docker'
+    /*from ('docker/Dockerfile', jarPath)
+    into 'build/docker'*/
+    from layout.projectDirectory.file('docker/Dockerfile'), layout.buildDirectory.file('libs/' + jarName)
+    into layout.buildDirectory.dir('docker')
 
     rename (jarName, 'app.jar')
 
-    //exclude才是不再删除指定文件的配置
+    //exclude才是不再删除指定文件的配置，查看Sync文档可知
     /*preserve {
         exclude 'build/libs/app.jar'
     }*/
 }
 
 tasks.named('dockerBuildImage') {
-    dockerFile = file('build/docker/Dockerfile')
-    inputDir = file('build/docker')
+
+    /*dockerFile = file('build/docker/Dockerfile')
+    inputDir = file('build/docker')*/
+    dockerFile = layout.buildDirectory.file('docker/Dockerfile')
+    inputDir = layout.buildDirectory.dir('docker')
 
     //需要先亲空，否则默认镜像是 groupId/projectName:version
     images.empty()
@@ -56,6 +60,7 @@ tasks.named('dockerBuildImage') {
 }
 
 tasks.register('clearBuildDockerDir', Delete) {
-    delete 'build/docker'
+    //delete 'build/docker'
+    delete layout.buildDirectory.dir('docker')
 }
 dockerBuildImage.configure { finalizedBy clearBuildDockerDir }

@@ -2,6 +2,9 @@ plugins {
     id 'application'
 
     id 'myproject.java-conventions'
+
+    //这个插件提供shadowJar，来打包成一个fatJar。其实用处不大
+    //id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'com.hjg'
@@ -10,7 +13,7 @@ version = '1.0-SNAPSHOT'
 ext.mainClassName = 'com.hjg.stream.StreamApp'
 
 application {
-    mainClassName = "${mainClassName}"
+    mainClassName = "$mainClassName"
 }
 
 repositories {
@@ -19,6 +22,8 @@ repositories {
 
 dependencies {
     implementation project(':entity')
+
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
 }
 
 tasks.register('uberJar', Jar) {
@@ -39,6 +44,6 @@ tasks.register('uberJar', Jar) {
     manifest {
         attributes("Implementation-Title": "Gradle",
                 "Implementation-Version": archiveVersion,
-                'Main-Class' : "${mainClassName}")
+                'Main-Class' : "$mainClassName")
     }
 }
