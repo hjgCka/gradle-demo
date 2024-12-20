@@ -1,4 +1,5 @@
 plugins {
+    //该插件是使用precompile script所必须的
     id 'groovy-gradle-plugin'
 }
 

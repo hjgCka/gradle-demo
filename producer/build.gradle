@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+
+    id 'myproject.java-conventions'
+}
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+def buildInfo = tasks.register("buildInfo", BuildInfo) {
+    version = project.version
+    outputFile = layout.buildDirectory.file('generated-resources/build-info.properties')
+}
+
+sourceSets {
+    //除了默认的输出，又多注册了输出。其结果是build-info.properties文件，被打包进入了产出的jar文件根目录
+    main {
+        output.dir(buildInfo.map { it.outputFile.asFile.get().parentFile })
+    }
+}

@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+
+    id 'myproject.java-conventions'
+}
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    runtimeOnly project(':producer')
+}
