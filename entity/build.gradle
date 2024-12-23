@@ -6,3 +6,13 @@ plugins {
 
 group = 'com.hjg'
 version = '1.0-SNAPSHOT'
+
+task printName {
+    doLast {
+        /**
+         * 分别输出 printName 和 entity
+         */
+        println name
+        println project.name
+    }
+}

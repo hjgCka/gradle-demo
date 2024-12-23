@@ -24,6 +24,9 @@ dependencies {
     implementation project(':entity')
 
     implementation 'org.apache.commons:commons-lang3:3.13.0'
+
+    implementation 'com.hjg:carEntity:1.0-SNAPSHOT'
+    implementation 'com.hjg:trainEntity:1.0-SNAPSHOT'
 }
 
 tasks.register('uberJar', Jar) {

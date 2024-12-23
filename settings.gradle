@@ -5,3 +5,22 @@ include 'web-app'
 include 'consumer'
 include 'producer'
 
+/**
+ * 执行projects这一task，可以看到如下输出
+ * +--- Project ':services'
+ |    \--- Project ':services:includedLib1'
+
+    说明，services也成为了一个project。而且projectDir 和 buildFileName 都能更改。
+ */
+include 'services:includedLib1'
+
+/**
+ * 实验includeBuild相关功能：
+ * 被includeBuild进来的项目，gradle如果发现它作为依赖的话，依赖会被替换为项目依赖。
+ * 此外还支持使用includeBuild进来的项目的task，比如：
+ * tasks.register('run') {
+    dependsOn gradle.includedBuild('my-app').task(':app:run')
+    }
+    即本项目依赖includeBuild进来的项目的task。
+ */
+includeBuild 'includedBuildLibs'
