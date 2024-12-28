@@ -1,0 +1,34 @@
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+//********以下是自己编写的************
+
+abstract class GreetingTask extends DefaultTask {
+
+    @Input
+    abstract Property<String> getGreeting()
+
+    @Internal
+    final Provider<String> message = greeting.map {it + ' from Gradle'}
+
+    GreetingTask() {
+        greeting.convention('hello from GreetingTask')
+    }
+
+    @TaskAction
+    def greet() {
+        println greeting.get()
+        logger.quiet(message.get())
+    }
+}
+
+tasks.register('hello', GreetingTask)
+
+tasks.register('greeting', GreetingTask) {
+    greeting = 'greetings from GreetingTask'
+}
+
+
+
+

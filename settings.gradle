@@ -24,3 +24,6 @@ include 'services:includedLib1'
     即本项目依赖includeBuild进来的项目的task。
  */
 includeBuild 'includedBuildLibs'
+include 'taskDemo'
+include 'pluginDemo'
+
