@@ -18,10 +18,17 @@ application {
 
 repositories {
     mavenCentral()
+
+    /**
+     * 必须加上这个方法，否则StreamApp无法通过编译。
+     * 该方法会指示gradle从本地maven仓库寻找所依赖的工件。
+     */
+    mavenLocal()
 }
 
 dependencies {
-    implementation project(':entity')
+    //implementation project(':entity')
+    implementation 'com.hjg:entity:1.0-SNAPSHOT'
 
     implementation 'org.apache.commons:commons-lang3:3.13.0'
 

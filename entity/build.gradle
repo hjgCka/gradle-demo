@@ -2,6 +2,8 @@ plugins {
     id 'java-library'
 
     id 'myproject.java-conventions'
+
+    id 'maven-publish'
 }
 
 group = 'com.hjg'
@@ -14,5 +16,15 @@ task printName {
          */
         println name
         println project.name
+    }
+}
+
+publishing {
+    //执行publishMyLibraryPublicationToMavenLocal即可发布到本地maven仓库
+    //publish 和 publishToMavenLocal 都是聚合task
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
     }
 }
