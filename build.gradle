@@ -4,5 +4,7 @@ version = '1.0-SNAPSHOT'
 
 
 tasks.named('wrapper') {
-    distributionUrl = 'http://mirrors.cloud.tencent.com/gradle/gradle-7.6.3-bin.zip'
+    //distributionUrl = 'http://mirrors.cloud.tencent.com/gradle/gradle-7.6.3-bin.zip'
+    //file协议是三个///
+    distributionUrl = 'file:///D:/downloads/gradle-7.6-all.zip'
 }
