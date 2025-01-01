@@ -1,4 +1,23 @@
-interface GreetingPluginExtension {
+plugins {
+    id 'java-gradle-plugin'
+
+    //为了发布到maven本地仓库，需要这个插件。如果只是发布到maven本地，该插件不需要配置。
+    id 'maven-publish'
+}
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+gradlePlugin {
+    plugins {
+        create("simplePlugin") {
+            id = "com.hjg.plugin.Greeting"
+            implementationClass = "com.hjg.plugin.GreetingPlugin"
+        }
+    }
+}
+
+/*interface GreetingPluginExtension {
     Property<String> getMessage()
     Property<String> getGreeter()
 }
@@ -20,4 +39,4 @@ apply plugin: GreetingPlugin
 greeting {
     message = 'Hi'
     greeter = 'Gradle'
-}
+}*/

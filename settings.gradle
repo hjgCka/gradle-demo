@@ -1,3 +1,13 @@
+pluginManagement {
+    plugins {
+    }
+    resolutionStrategy {
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
 rootProject.name = 'java_demos'
 include 'entity'
 include 'stream-demo'

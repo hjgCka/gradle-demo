@@ -4,6 +4,8 @@ plugins {
     id 'myproject.java-conventions'
 
     id 'maven-publish'
+
+    id 'com.hjg.plugin.Greeting' version '1.0-SNAPSHOT'
 }
 
 group = 'com.hjg'
@@ -20,6 +22,7 @@ task printName {
 }
 
 publishing {
+    //maven-publish插件自带支持发布到maven 本地仓库，不需要额外配置仓库。
     //执行publishMyLibraryPublicationToMavenLocal即可发布到本地maven仓库
     //publish 和 publishToMavenLocal 都是聚合task
     publications {
@@ -27,4 +30,10 @@ publishing {
             from components.java
         }
     }
+}
+
+//给自定义的插件使用
+greeting {
+    message = 'Hi'
+    greeter = 'Gradle'
 }
