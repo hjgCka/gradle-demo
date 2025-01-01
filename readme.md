@@ -24,6 +24,8 @@
 
 使用了java-library插件，并且提供了发布到本地maven仓库的代码。
 
+使用了由pluginDemo提供的自定义插件。
+
 
 
 #### includedBuildLibs
@@ -36,7 +38,7 @@ includedBuild进来的项目，可以使用它的task。并且如果有模块依
 
 #### pluginDemo
 
-在这个项目编写插件。
+在这个项目编写插件并且发布到maven本地仓库。
 
 
 
