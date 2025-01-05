@@ -36,6 +36,12 @@ includedBuild进来的项目，可以使用它的task。并且如果有模块依
 
 
 
+#### jdk17Test
+
+实验了toolChain功能，toolChain设置后会用于编译、测试、javadoc。
+
+
+
 #### pluginDemo
 
 在这个项目编写插件并且发布到maven本地仓库。

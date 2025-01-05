@@ -36,4 +36,5 @@ include 'services:includedLib1'
 includeBuild 'includedBuildLibs'
 include 'taskDemo'
 include 'pluginDemo'
+include 'jdk17Test'
 

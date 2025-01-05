@@ -1,0 +1,31 @@
+plugins {
+    id 'myproject.java-conventions'
+}
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+//Setup all compile, test and javadoc tasks to use the defined toolchain
+// which may be different than the one Gradle itself uses
+//但是运行不是用的定义好的toolchain
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+task runWithJavaExec(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.hjg.Jdk17BasicRecord'
+
+    //为了用toolchain来运行，需要配置javaLauncher
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
