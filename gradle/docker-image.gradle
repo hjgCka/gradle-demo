@@ -1,0 +1,54 @@
+//Only Project and Settings build scripts can contain plugins {} blocks
+//在这里无法使用plugins这个DSL
+/*plugins {
+    //从7.0开始，需要JDK11
+    id 'com.bmuschko.docker-spring-boot-application' version '6.7.0'
+}*/
+
+buildscript {
+    repositories {
+        //gradlePluginPortal()
+        maven {
+            url 'https://mirrors.tencent.com/nexus/repository/maven-public'
+        }
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:6.7.0'
+    }
+}
+
+//通过文档https://bmuschko.github.io/gradle-docker-plugin/，
+//得知引用脚本插件的方式，这里需要应用一个具体的类
+apply plugin: com.bmuschko.gradle.docker.DockerSpringBootApplicationPlugin
+
+//配置docker
+docker {
+    url = 'tcp://10.168.55.88:2375'
+}
+
+task prepareBuildDir(type: Sync, dependsOn: bootJar) {
+    //由java插件引入的一个名为Jar的task，可以在脚本中使用jar{}配置，同时它也是一种可以调用的方法。
+    def jarName = jar.archiveFileName.get()
+
+    from layout.projectDirectory.file('docker/Dockerfile'), layout.buildDirectory.file('libs/' + jarName)
+    into layout.buildDirectory.dir('docker')
+
+    rename (jarName, 'app.jar')
+}
+
+tasks.named('dockerBuildImage') {
+    dockerFile = layout.buildDirectory.file('docker/Dockerfile')
+    inputDir = layout.buildDirectory.dir('docker')
+
+    //需要先清空，否则默认镜像是 groupId/projectName:version
+    images.empty()
+    def version = "${project.name}" + ':' + "${version.toLowerCase()}"
+    images.add(version)
+
+    dependsOn prepareBuildDir
+}
+
+tasks.register('clearBuildDockerDir', Delete) {
+    delete layout.buildDirectory.dir('docker')
+}
+dockerBuildImage.configure { finalizedBy clearBuildDockerDir }
