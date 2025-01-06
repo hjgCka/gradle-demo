@@ -29,3 +29,12 @@ dependencies {
     //implementation project(':entity')
     implementation 'com.hjg:entity:1.0-SNAPSHOT'
 }
+
+task printRepositories {
+    doLast {
+        println 'all repos'
+        println repositories.collect { it.name }
+
+        repositories.forEach {repo -> println repo.properties.get('repositoryUrls')}
+    }
+}
