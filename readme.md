@@ -62,7 +62,7 @@ includedBuild进来的项目，可以使用它的task。并且如果有模块依
 
 #### taskDemo
 
-在该项目验证了一些task编写。
+在该项目验证了一些task编写，同时编写了增量构建的task。
 
 
 
