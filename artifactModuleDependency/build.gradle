@@ -1,0 +1,41 @@
+repositories {
+    /*ivy {
+        //url 'https://ajax.googleapis.com/ajax/libs'
+        url 'https://ajax.lug.ustc.edu.cn/ajax/libs'
+        patternLayout {
+            artifact '[organization]/[revision]/[module].[ext]'
+        }
+        metadataSources {
+            artifact()
+        }
+    }*/
+
+    ivy {
+        //使用中科大镜像地址
+        url 'https://ajax.lug.ustc.edu.cn/ajax/libs'
+        patternLayout {
+            artifact '[organization]/[revision]/[module](.[classifier]).[ext]'
+        }
+        metadataSources {
+            artifact()
+        }
+    }
+}
+
+configurations {
+    js
+}
+
+dependencies {
+    //js 'jquery:jquery:3.2.1@js'
+    js 'jquery:jquery:3.2.1:min@js'
+}
+
+//确实下载了jquery-3.2.1-min.js文件。通过ivy的patternLayout，指定了不同的artifact
+
+task printDependencies {
+    doLast {
+        configurations.js.collect { relativePath(it) }
+                .sort().each { println it }
+    }
+}

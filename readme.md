@@ -4,6 +4,14 @@
 
 
 
+#### artifactModuleDependency
+
+对应文档的working with dependencies -> learing the basics -> declaring dependencies
+
+下面的**Resolving specific artifacts from a module dependency** 部分的例子。
+
+
+
 #### buildSrc
 
 写了一个`convention plugin`，这部分涉及到插件开发，在`Developing Gradle Plugins`中有提到，即`Precompiled script plugins`相关知识。
