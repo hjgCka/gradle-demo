@@ -38,4 +38,5 @@ include 'taskDemo'
 include 'pluginDemo'
 include 'jdk17Test'
 include 'artifactModuleDependency'
+include 'annotations'
 

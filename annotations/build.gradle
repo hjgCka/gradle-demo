@@ -1,0 +1,100 @@
+plugins {
+    id 'java'
+
+    id 'myproject.java-conventions'
+}
+
+group = 'com.hjg'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
+
+tasks.register('compileAnnotationBase', JavaCompile) {
+    // source = sourceSets.main.java.srcDirs
+
+    def filePathPrefix = sourceSets.main.java.srcDirs.first().absolutePath
+    source = files(
+            "${filePathPrefix}/com/hjg/annotations/Simple.java",
+            "${filePathPrefix}/com/hjg/annotations/SimpleProcessor.java"
+    )
+
+    destinationDirectory = sourceSets.main.java.destinationDirectory
+    //destinationDirectory  = file("${buildDir}/classes/annotation-base")
+
+    /*outputs.files(
+            "${buildDir}/classes/java/main/Simple.class",
+            "${buildDir}/classes/java/main/SimpleProcessor.class"
+    )*/
+
+    classpath = sourceSets.main.compileClasspath
+
+    options.encoding = 'UTF-8'
+    options.debug = true
+
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+tasks.register('compileAnnotationApp', JavaCompile) {
+    dependsOn compileAnnotationBase
+
+    def filePathPrefix = sourceSets.main.java.srcDirs.first().absolutePath
+    source = files(
+            "${filePathPrefix}/com/hjg/annotations/SimpleTest.java"
+    )
+    destinationDirectory = sourceSets.main.java.destinationDirectory
+
+    classpath = sourceSets.main.compileClasspath + files(compileAnnotationBase.destinationDirectory)
+
+    options.encoding = 'UTF-8'
+    options.debug = true
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-XprintProcessorInfo"
+
+    //options.annotationProcessorPath = files(compileAnnotationBase.destinationDirectory)
+    /**
+     * gradle提示使用CompileOptions.annotationProcessorPath，即使用JavaCompile中的options对象。
+     * 提示如下：
+     * Cannot specify -processorpath or --processor-path via `CompileOptions.compilerArgs`.
+     * Use the `CompileOptions.annotationProcessorPath` property instead.
+     */
+    options.compilerArgs << '-processorpath' << compileAnnotationBase.destinationDirectory.get().asFile.absolutePath
+
+    options.compilerArgs << '-processor' << 'com.hjg.annotations.SimpleProcessor'
+    //javac的 -proc:only选项，只运行注解处理器，而不会产生.class文件。只是用在快速验证注解处理器的地方。
+
+    println 'compilerArgs = ' + options.compilerArgs
+
+    /*doFirst {
+        def javacArgs = [
+                "-d ${destinationDirectory.get().asFile.absolutePath}",
+                "-classpath ${classpath.asPath}",
+                "-source ${sourceCompatibility}",
+                "-target ${targetCompatibility}",
+                options.compilerArgs.join(' '),
+                source.files.join(' ')
+        ].join(' ')
+
+        logger.lifecycle("模拟命令行: javac ${javacArgs}")
+    }*/
+}
+
+task printExtensions {
+    doLast {
+        println 'extension:Java' + project.extensions.findByName('java')
+        println 'extension:sourceSets' + project.extensions.findByName('sourceSets')
+    }
+}

@@ -37,3 +37,16 @@ greeting {
     message = 'Hi'
     greeter = 'Gradle'
 }
+
+task printExtensions {
+    doLast {
+        /**
+         * 自定义的对象，支撑后台的extension机制
+         * 一个JavaPluginExtension接口的实现对象，支撑后台的extension机制
+         * 一个SourceSetContainer接口的实现对象，支撑后台的extension机制
+         */
+        println project.extensions.findByName('greeting').class.getCanonicalName()
+        println project.extensions.findByName('java').class.getCanonicalName()
+        println project.extensions.findByName('sourceSets').class.getCanonicalName()
+    }
+}
